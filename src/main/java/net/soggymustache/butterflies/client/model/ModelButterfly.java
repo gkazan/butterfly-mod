@@ -47,7 +47,7 @@ public class ModelButterfly extends ModelBase {
         this.wingLeft2.setRotationPoint(1.0F, -1.0F, 0.0F);
         this.wingLeft2.addBox(0.0F, 0.0F, 0.0F, 9, 0, 7, 0.0F);
         this.body = new ModelRenderer(this, 0, 0);
-        this.body.setRotationPoint(0.0F, 0.0F, 0.0F);
+        this.body.setRotationPoint(0.0F, 21.0F, 0.0F);
         this.body.addBox(-1.0F, -1.0F, -3.5F, 2, 2, 7, 0.0F);
         this.setRotateAngle(body, -0.3490658503988659F, 0.0F, 0.0F);
         this.body.addChild(this.wingRight2);
