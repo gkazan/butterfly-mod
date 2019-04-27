@@ -40,10 +40,10 @@ public class RenderButterfly extends RenderLiving<EntityButterfly>
     	super.preRenderCallback(entitylivingbaseIn, partialTickTime);
     	GlStateManager.scale(0.5F, 0.5F, 0.5F);
     	if(entitylivingbaseIn.getIsButterflyLanded()) {
-    		GlStateManager.translate(0.0F, 0.3F, 0.0F);
+    		GlStateManager.translate(0.0F, 1.6F, 0.0F);
     	}
     	else {
-    		GlStateManager.translate(0.0F, 0.0F, 0.0F);
+    		GlStateManager.translate(0.0F, 1.3F, 0.0F);
     	}
     }
 

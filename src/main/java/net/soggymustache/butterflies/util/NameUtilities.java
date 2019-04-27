@@ -12,6 +12,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.soggymustache.butterflies.client.render.RenderButterfly;
@@ -19,17 +20,14 @@ import net.soggymustache.butterflies.entity.EntityButterfly;
 
 public class NameUtilities {
 	
-	public static List<String> pre, first, middle;
+	public static List<String> pre, middle;
 	public static final Random RANDOM = new Random();
-	public static Map<Integer, String> predef;
 	private static Map<Integer, ButterflyInfo> butterflies;
 	private static int nextID = 0;
 	private static int[] IDS;
 	
 	static {
 		butterflies = new HashMap<>();
-		predef = new HashMap<>();
-		first = Lists.newArrayList();
 		middle = Lists.newArrayList();
 		pre = Lists.newArrayList();
 		
@@ -37,11 +35,6 @@ public class NameUtilities {
 		pre.add("Common");
 		pre.add("Undiscovered");
 
-		for(EnumDyeColor s : EnumDyeColor.values()) {
-			if(s.getMetadata() != 15)//Blacklist black colour
-				first.add(fix((s.getUnlocalizedName().replaceAll("_", " "))));
-		}
-		
 		middle.add("Eastern");
 		middle.add("Western");
 		middle.add("Northern");
@@ -51,6 +44,7 @@ public class NameUtilities {
 		middle.add("Strange");
 
 		nextID = ButterflyType.values().length;
+		
 		addButterfly(new ButterflyInfo("Menelaus Blue Morpho Butterfly", 10.0F, 0.18F, 0.502F, 0.671F));
 		addButterfly(new ButterflyInfo("Erose\'s Butterfly", 10.0F, 0.875F, 0.592F, 0.824F));
 		
@@ -141,8 +135,15 @@ public class NameUtilities {
 			}
 			
 			if(colour != null) {
+				if(colour == EnumDyeColor.BLACK)
+					colour = EnumDyeColor.WHITE;
+				
 				name += " ";
-				name += fix((colour.getUnlocalizedName().replaceAll("_", " ")));
+				
+				if(colour == EnumDyeColor.LIGHT_BLUE)
+					name += "Light Blue";
+				else
+					name += fix((colour.getUnlocalizedName().replaceAll("_", " ")));
 				rarity += colour.getMetadata() * 0.1F;
 			}
 			
@@ -180,7 +181,6 @@ public class NameUtilities {
 	}
 	
 	public static String fix(String input) {
-	    input = CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, input);
 	    StringBuilder titleCase = new StringBuilder();
 	    boolean n = true;
 
