@@ -2,9 +2,9 @@
 Butterflies in Minecraft
 
 Authors: 
-George Kazanjian (https://georgekazan.dev)
-joelzbud
-Coda
+...George Kazanjian (https://georgekazan.dev)
+...joelzbud
+...Coda
 
 
 This project has no license please refer to https://choosealicense.com/no-permission/
