@@ -108,13 +108,13 @@ public class TileEntityButterflyCaseRenderer extends TileEntitySpecialRenderer<T
 				GlStateManager.pushMatrix();
 				if(wings != null) {
 	            	this.bindTexture(wings);
-		            RenderButterfly.BUTTERFLY.render(null, 0, 0, 0, 0, 0, 0.0625F);
+	            	BUTTERFLY.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 				}
 				GlStateManager.color(te.getTileData().getFloat("Red"), te.getTileData().getFloat("Green"), te.getTileData().getFloat("Blue"));
 	        	this.bindTexture(color);
-	        	RenderButterfly.BUTTERFLY.render(null, 0, 0, 0, 0, 0, 0.0625F);
 	            GlStateManager.popMatrix();
 			}
+			BUTTERFLY.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 
 	      	GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
 			GlStateManager.popMatrix();
