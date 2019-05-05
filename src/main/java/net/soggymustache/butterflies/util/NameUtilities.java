@@ -51,13 +51,13 @@ public class NameUtilities {
 		ButterflyInfo glasswing = new ButterflyInfo("Glasswing Butterfly", 10.0F) {
 			@Override
 			@SideOnly(Side.CLIENT)
-			public void render(ModelBase model, RenderButterfly render, EntityButterfly e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+			public void render(ModelBase model, IButterflyRenderer render, EntityButterfly e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 	            GlStateManager.pushMatrix();
 	            GlStateManager.enableAlpha();
 	            GlStateManager.enableBlend();
 	            GlStateManager.color(e.getRed(), e.getGreen(), e.getBlue(), 0.5F);
-	        	render.bindTexture(render.WINGS);
-	        	model.setModelAttributes(render.getMainModel());
+	        	render.addTexture(RenderButterfly.WINGS);
+	        	model.setModelAttributes(RenderButterfly.BUTTERFLY);
 	        	model.render(e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 	            GlStateManager.color(e.getRed(), e.getGreen(), e.getBlue(), 1.0F);
 	            GlStateManager.disableAlpha();
@@ -70,7 +70,7 @@ public class NameUtilities {
 		ButterflyInfo rainbow = new ButterflyInfo("Rainbow Butterfly", 10.0F) {
 			@Override
 			@SideOnly(Side.CLIENT)
-			public void render(ModelBase model, RenderButterfly render, EntityButterfly e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+			public void render(ModelBase model, IButterflyRenderer render, EntityButterfly e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
     	    	GlStateManager.pushMatrix();
     	        int i1 = 25;
     	        int i = e.ticksExisted / 25 + e.getEntityId();
@@ -81,8 +81,8 @@ public class NameUtilities {
     	        float[] afloat1 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(k));
     	        float[] afloat2 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(l));
     	        GlStateManager.color(afloat1[0] * (1.0F - f) + afloat2[0] * f, afloat1[1] * (1.0F - f) + afloat2[1] * f, afloat1[2] * (1.0F - f) + afloat2[2] * f);
-	        	render.bindTexture(render.WINGS);
-	        	model.setModelAttributes(render.getMainModel());
+	        	render.addTexture(RenderButterfly.WINGS);
+	        	model.setModelAttributes(RenderButterfly.BUTTERFLY);
 	        	model.render(e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
     	        GlStateManager.popMatrix();
 			}

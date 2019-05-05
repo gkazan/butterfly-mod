@@ -4,16 +4,14 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.entity.passive.EntitySheep;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.soggymustache.butterflies.ButterfliesReference;
 import net.soggymustache.butterflies.client.model.ModelButterfly;
 import net.soggymustache.butterflies.entity.EntityButterfly;
-import net.soggymustache.butterflies.util.ButterflyInfo;
 import net.soggymustache.butterflies.util.ButterflyType;
+import net.soggymustache.butterflies.util.IButterflyRenderer;
 import net.soggymustache.butterflies.util.NameUtilities;
 
 @SideOnly(Side.CLIENT)
@@ -27,8 +25,8 @@ public class RenderButterfly extends RenderLiving<EntityButterfly>
     public static final ResourceLocation MONARCH_COLOR = new ResourceLocation(ButterfliesReference.MOD_ID + ":textures/entity/butterfly/monarch_color.png");
     public static final ResourceLocation CLOAK_WINGS = new ResourceLocation(ButterfliesReference.MOD_ID + ":textures/entity/butterfly/cloak_overlay.png");
     public static final ResourceLocation CLOAK_COLOR = new ResourceLocation(ButterfliesReference.MOD_ID + ":textures/entity/butterfly/cloak_color.png");
-    
-    
+    public static final ModelButterfly BUTTERFLY = new ModelButterfly();
+	
     public RenderButterfly(RenderManager rm)
     {
         super(rm, new ModelButterfly(), 0.2F);
@@ -53,10 +51,9 @@ public class RenderButterfly extends RenderLiving<EntityButterfly>
     }
     
 	@SideOnly(Side.CLIENT)
-	public class LayerButterfly implements LayerRenderer<EntityButterfly> {
+	public class LayerButterfly implements LayerRenderer<EntityButterfly>, IButterflyRenderer{
 		private final RenderButterfly render;
-		private final ModelButterfly butterfly = new ModelButterfly();
-		
+
 		public LayerButterfly(RenderButterfly re) {
 			this.render = re;
 		}
@@ -66,7 +63,7 @@ public class RenderButterfly extends RenderLiving<EntityButterfly>
 			if (!e.isInvisible())
 	        {
 				if(e.getExtra() > ButterflyType.values().length) {
-					NameUtilities.getInfo().get(e.getExtra()).render(this.butterfly, this.render, e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+					NameUtilities.getInfo().get(e.getExtra()).render(this.render.BUTTERFLY, this, e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 				}
 				else {
 					ResourceLocation color = null, wings = null;
@@ -90,13 +87,13 @@ public class RenderButterfly extends RenderLiving<EntityButterfly>
 					GlStateManager.pushMatrix();
 					if(wings != null) {
 		            	this.render.bindTexture(wings);
-			        	this.butterfly.setModelAttributes(this.render.mainModel);
-			            this.butterfly.render(e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+			        	this.render.BUTTERFLY.setModelAttributes(this.render.mainModel);
+			            this.render.BUTTERFLY.render(e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 					}
 					GlStateManager.color(e.getRed(), e.getGreen(), e.getBlue());
 		        	this.render.bindTexture(color);
-		        	this.butterfly.setModelAttributes(this.render.mainModel);
-		            this.butterfly.render(e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+		        	this.render.BUTTERFLY.setModelAttributes(this.render.mainModel);
+		            this.render.BUTTERFLY.render(e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 		            GlStateManager.popMatrix();
 				}
 			}
@@ -105,6 +102,11 @@ public class RenderButterfly extends RenderLiving<EntityButterfly>
 		@Override
 		public boolean shouldCombineTextures() {
 			return true;
+		}
+
+		@Override
+		public void addTexture(ResourceLocation resource) {
+			this.render.bindTexture(resource);
 		}
 	}
 }
