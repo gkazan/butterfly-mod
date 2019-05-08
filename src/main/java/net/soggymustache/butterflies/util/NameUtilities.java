@@ -3,15 +3,18 @@ package net.soggymustache.butterflies.util;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import com.google.common.base.CaseFormat;
 import com.google.common.collect.Lists;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -64,6 +67,18 @@ public class NameUtilities {
 	            GlStateManager.disableBlend();
 	            GlStateManager.popMatrix();
 			}
+			
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void renderCase(ModelBase model, IButterflyRenderer render, NBTTagCompound e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+	            GlStateManager.pushMatrix();
+	            GlStateManager.color(e.getFloat("Red"), e.getFloat("Green"), e.getFloat("Blue"), 0.5F);
+	        	render.addTexture(RenderButterfly.WINGS);
+	        	model.setModelAttributes(RenderButterfly.BUTTERFLY);
+	        	model.render(null, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+	            GlStateManager.color(e.getFloat("Red"), e.getFloat("Green"), e.getFloat("Blue"), 1.0F);
+	            GlStateManager.popMatrix();
+			}
 		};
 		addButterfly(glasswing);
 		
@@ -84,6 +99,25 @@ public class NameUtilities {
 	        	render.addTexture(RenderButterfly.WINGS);
 	        	model.setModelAttributes(RenderButterfly.BUTTERFLY);
 	        	model.render(e, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+    	        GlStateManager.popMatrix();
+			}
+			
+			@Override
+			@SideOnly(Side.CLIENT)
+			public void renderCase(ModelBase model, IButterflyRenderer render, NBTTagCompound e, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    	    	GlStateManager.pushMatrix();
+    	        int i1 = 25;
+    	        int i = Minecraft.getMinecraft().player.ticksExisted / 25;
+    	        int j = EnumDyeColor.values().length;
+    	        int k = i % j;
+    	        int l = (i + 1) % j;
+    	        float f = ((float)(Minecraft.getMinecraft().player.ticksExisted % 25) + 2.0F) / 25.0F;
+    	        float[] afloat1 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(k));
+    	        float[] afloat2 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(l));
+    	        GlStateManager.color(afloat1[0] * (1.0F - f) + afloat2[0] * f, afloat1[1] * (1.0F - f) + afloat2[1] * f, afloat1[2] * (1.0F - f) + afloat2[2] * f);
+	        	render.addTexture(RenderButterfly.WINGS);
+	        	model.setModelAttributes(RenderButterfly.BUTTERFLY);
+	        	model.render(null, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
     	        GlStateManager.popMatrix();
 			}
 		};

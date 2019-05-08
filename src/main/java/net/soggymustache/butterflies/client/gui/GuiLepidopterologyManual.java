@@ -5,7 +5,6 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
@@ -23,10 +22,11 @@ import net.soggymustache.butterflies.client.model.ModelButterfly;
 import net.soggymustache.butterflies.client.render.RenderButterfly;
 import net.soggymustache.butterflies.client.render.TileEntityButterflyCaseRenderer;
 import net.soggymustache.butterflies.entity.EntityButterfly;
+import net.soggymustache.butterflies.util.ButterflyType;
+import net.soggymustache.butterflies.util.IButterflyRenderer;
 import net.soggymustache.butterflies.util.NameUtilities;
-import net.soggymustache.butterflies.util.RenderHelp;
 
-public class GuiLepidopterologyManual extends GuiScreen {
+public class GuiLepidopterologyManual extends GuiScreen implements IButterflyRenderer {
 	
 	private static final Minecraft mc = Minecraft.getMinecraft();
 	private final int ImageHeight = 201, ImageWidth = 318;
@@ -108,7 +108,7 @@ public class GuiLepidopterologyManual extends GuiScreen {
 			int posX = 240 + offLeft;
 			int posY = 60 + offTop;
 			int scale = 100;
-/*
+
 			for(int pp = 0; pp < 2; pp++) {
 				if(pp == 1) {
 					posX = 110 + offLeft;
@@ -137,40 +137,40 @@ public class GuiLepidopterologyManual extends GuiScreen {
 				Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.TEXTURE);
 				TileEntityButterflyCaseRenderer.BUTTERFLY.render((Entity) null, 0, 0, 0, 0, 0, 0.0625F);
 
-				if(compound.getFloat("Extra") == NameUtilities.ADMIRAL) {
-					Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.ADMIRAL_WINGS);
-					TileEntityButterflyCaseRenderer.BUTTERFLY.render((Entity) null, 0, 0, 0, 0, 0, 0.0625F);
+
+				int extra = compound.getInteger("Extra");
+		    	
+				if(extra > ButterflyType.values().length) {
+					NameUtilities.getInfo().get(extra).renderCase(TileEntityButterflyCaseRenderer.BUTTERFLY, this, compound, 0, 0, 0, 0, 0, 0.0625F);
+				}
+				else {
+					ResourceLocation color = null, wings = null;
+					
+					if(extra == ButterflyType.ADMIRAL.id) {
+						wings = RenderButterfly.ADMIRAL_WINGS;
+						color = RenderButterfly.ADMIRAL_COLOR;
+					}
+					else if(extra == ButterflyType.MONARCH.id) {
+						wings = RenderButterfly.MONARCH_WINGS;
+						color = RenderButterfly.MONARCH_COLOR;
+					}
+					else if(extra == ButterflyType.CLOAK.id) {
+						wings = RenderButterfly.CLOAK_WINGS;
+						color = RenderButterfly.CLOAK_COLOR;
+					}
+					else {
+						color = RenderButterfly.WINGS;
+					}
+					
+					GlStateManager.pushMatrix();
+					if(wings != null) {
+		            	this.addTexture(wings);
+		            	TileEntityButterflyCaseRenderer.BUTTERFLY.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
+					}
 					GlStateManager.color(compound.getFloat("Red"), compound.getFloat("Green"), compound.getFloat("Blue"));
-					Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.ADMIRAL_COLOR);
-	            }
-	            else if(compound.getFloat("Extra") == NameUtilities.MONARCH) {
-					Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.MONARCH_WINGS);
-					TileEntityButterflyCaseRenderer.BUTTERFLY.render((Entity) null, 0, 0, 0, 0, 0, 0.0625F);
-					GlStateManager.color(compound.getFloat("Red"), compound.getFloat("Green"), compound.getFloat("Blue"));
-					Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.MONARCH_COLOR);
-	            }
-	            else if(compound.getFloat("Extra") == NameUtilities.CLOAK) {
-					Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.CLOAK_WINGS);
-					TileEntityButterflyCaseRenderer.BUTTERFLY.render((Entity) null, 0, 0, 0, 0, 0, 0.0625F);
-					GlStateManager.color(compound.getFloat("Red"), compound.getFloat("Green"), compound.getFloat("Blue"));
-					Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.CLOAK_COLOR);
-	            }
-	            else if(compound.getFloat("Extra") == NameUtilities.RAINBOW) {
-	    	        int i1 = 25;
-	    	        int i = Minecraft.getMinecraft().player.ticksExisted / 25 + 324;
-	    	        int j = EnumDyeColor.values().length;
-	    	        int k = i % j;
-	    	        int l = (i + 1) % j;
-	    	        float f = ((float)(Minecraft.getMinecraft().player.ticksExisted % 25) + 2.0F) / 25.0F;
-	    	        float[] afloat1 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(k));
-	    	        float[] afloat2 = EntitySheep.getDyeRgb(EnumDyeColor.byMetadata(l));
-	    	        GlStateManager.color(afloat1[0] * (1.0F - f) + afloat2[0] * f, afloat1[1] * (1.0F - f) + afloat2[1] * f, afloat1[2] * (1.0F - f) + afloat2[2] * f);
-					Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.WINGS);
-	            }
-	            else {
-					GlStateManager.color(compound.getFloat("Red"), compound.getFloat("Green"), compound.getFloat("Blue"));
-					Minecraft.getMinecraft().getTextureManager().bindTexture(RenderButterfly.WINGS);
-	            }
+		        	this.addTexture(color);
+		            GlStateManager.popMatrix();
+				}
 				
 				TileEntityButterflyCaseRenderer.BUTTERFLY.render((Entity) null, 0, 0, 0, 0, 0, 0.0625F);
 				rendermanager.setRenderShadow(true);
@@ -181,7 +181,7 @@ public class GuiLepidopterologyManual extends GuiScreen {
 				GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
 				GlStateManager.disableTexture2D();
 				GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
-			}*/
+			}
 		    
 	        fontRenderer.drawString("Name: " + compound.getString("Name"), offLeft + 15, offTop + 00, 0X000000); 
 	        fontRenderer.drawString("Rarity: " + compound.getFloat("Rarity"), offLeft + 15, offTop + 10, 0X000000); 
@@ -261,5 +261,10 @@ public class GuiLepidopterologyManual extends GuiScreen {
 		public GenericButton(int x, int y, int width, int height, String text) {
 			super(1, x, y, width, height, text);
 		}
+	}
+
+	@Override
+	public void addTexture(ResourceLocation resource) {
+		Minecraft.getMinecraft().getTextureManager().bindTexture(resource);
 	}
 }

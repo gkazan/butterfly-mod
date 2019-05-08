@@ -57,6 +57,8 @@ public class EntityButterfly extends EntityAmbientCreature {
 
 		NameUtilities.generateStats(this, color);
 		
+//		System.out.println(this.getExtra());
+		
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 

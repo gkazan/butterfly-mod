@@ -81,10 +81,12 @@ public class TileEntityButterflyCaseRenderer extends TileEntitySpecialRenderer<T
 	    	BUTTERFLY.render((Entity) null, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0625F);
 	    	GlStateManager.color(1, 1, 1, 1);
 	    	
-	    	float extra = te.getTileData().getFloat("Extra");
+	    	int extra = te.getTileData().getInteger("Extra");
 	    	
 			if(extra > ButterflyType.values().length) {
-				NameUtilities.getInfo().get(extra).render(BUTTERFLY, this, null, 0, 0, 0, 0, 0, 0.0625F);
+				GlStateManager.pushMatrix();
+				NameUtilities.getInfo().get(extra).renderCase(BUTTERFLY, this, te.getTileData(), 0, 0, 0, 0, 0, 0.0625F);
+				GlStateManager.popMatrix();
 			}
 			else {
 				ResourceLocation color = null, wings = null;
