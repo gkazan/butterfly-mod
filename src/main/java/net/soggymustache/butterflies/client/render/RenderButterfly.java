@@ -29,16 +29,16 @@ public class RenderButterfly extends RenderLiving<EntityButterfly>
 	
     public RenderButterfly(RenderManager rm)
     {
-        super(rm, new ModelButterfly(), 0.2F);
+        super(rm, new ModelButterfly(), 0.1F);
         this.addLayer(new LayerButterfly(this));
     }
     
     @Override
     protected void preRenderCallback(EntityButterfly entitylivingbaseIn, float partialTickTime) {
     	super.preRenderCallback(entitylivingbaseIn, partialTickTime);
-    	GlStateManager.scale(0.5F, 0.5F, 0.5F);
+    	GlStateManager.scale(0.35F, 0.35F, 0.35F);
     	if(entitylivingbaseIn.getIsButterflyLanded()) {
-    		GlStateManager.translate(0.0F, 0.3F, 0.0F);
+    		GlStateManager.translate(0.0F, 0.37F, 0.0F);
     	}
     	else {
     		GlStateManager.translate(0.0F, 0.0F, 0.0F);

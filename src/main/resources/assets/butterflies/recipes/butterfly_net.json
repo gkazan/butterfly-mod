@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  l",
+    " sn",
+    "s  "
+  ],
+  "key": {
+    "s": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    },
+    "n": {
+      "item": "minecraft:string",
+      "data": 0
+    },
+    "l": {
+      "item": "minecraft:lead",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "butterflies:butterfly_net",
+    "count": 1
+  }
+}

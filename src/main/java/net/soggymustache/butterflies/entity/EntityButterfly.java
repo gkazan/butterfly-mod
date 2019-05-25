@@ -1,13 +1,12 @@
 package net.soggymustache.butterflies.entity;
 
-import com.ibm.icu.util.GenderInfo.Gender;
-
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.passive.EntityAmbientCreature;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -22,11 +21,9 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.soggymustache.butterflies.ButterfliesMain;
 import net.soggymustache.butterflies.init.items.ButterflyItems;
-import net.soggymustache.butterflies.util.ButterflyType;
-import net.soggymustache.butterflies.util.ColorUtilities;
 import net.soggymustache.butterflies.util.NameUtilities;
 
-public class EntityButterfly extends EntityAmbientCreature {
+public class EntityButterfly extends EntityAnimal {
 	
 	private static final DataParameter<String> NAME = EntityDataManager.<String>createKey(EntityButterfly.class, DataSerializers.STRING);
 	private static final DataParameter<Byte> LANDED = EntityDataManager.<Byte>createKey(EntityButterfly.class, DataSerializers.BYTE);
@@ -103,7 +100,7 @@ public class EntityButterfly extends EntityAmbientCreature {
 
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(4.0D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2.0D);
 	}
 
 	public boolean getIsButterflyLanded() {
@@ -177,7 +174,7 @@ public class EntityButterfly extends EntityAmbientCreature {
 	}
 
 	public void onUpdate() {
-		//super.onUpdate();
+		super.onUpdate();
 
 		if (!this.isInWater()) {
 			if (this.getIsButterflyLanded()) {
@@ -309,5 +306,10 @@ public class EntityButterfly extends EntityAmbientCreature {
 
 	public float getEyeHeight() {
 		return this.height / 2.0F;
+	}
+
+	@Override
+	public EntityAgeable createChild(EntityAgeable ageable) {
+		return null;
 	}
 }

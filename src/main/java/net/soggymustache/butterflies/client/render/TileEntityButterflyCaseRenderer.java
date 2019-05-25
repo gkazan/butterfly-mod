@@ -58,8 +58,8 @@ public class TileEntityButterflyCaseRenderer extends TileEntitySpecialRenderer<T
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			
 			this.bindTexture(RenderButterfly.TEXTURE);
-			GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
-			GL11.glScalef(0.5F, 0.5F, 0.5F);
+			GL11.glTranslatef((float) x + 0.5F, (float) y + 1.2F, (float) z + 0.5F);
+			GL11.glScalef(0.35F, 0.35F, 0.35F);
 			switch(ButterflyCase.getValue(BlockButterflyCase.FACING)) {
 				case SOUTH:
 				default:
@@ -70,11 +70,13 @@ public class TileEntityButterflyCaseRenderer extends TileEntitySpecialRenderer<T
 					break;
 				case EAST:
 					GL11.glRotatef(180F, 1.0F, 0.0F, -1.0F);
+					
 					break;
 				case NORTH:
 					GL11.glRotatef(-180F, -0.0F, -0.0F, -1.0F);
 					break;
 			}
+			GL11.glTranslatef(0.0F, 0.0F, 0.33F);
 			GL11.glRotatef(70, 1, 0, 0);
 			GL11.glRotatef(180, 0, 1, 0);
 			GL11.glTranslatef(0, -0.05F, 1.6F);

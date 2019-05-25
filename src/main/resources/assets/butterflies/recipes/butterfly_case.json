@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ss ",
+    "scp",
+    "ss "
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:wooden_slab",
+      "data": 0
+    },
+    "c": {
+      "item": "minecraft:carpet",
+      "data": 0
+    },
+    "p": {
+      "item": "minecraft:glass_pane",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "butterflies:butterfly_case",
+    "count": 3
+  }
+}
