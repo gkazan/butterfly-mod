@@ -11,6 +11,7 @@ import net.soggymustache.butterflies.ButterfliesReference;
 import net.soggymustache.butterflies.client.model.ModelButterfly;
 import net.soggymustache.butterflies.client.model.ModelButterflyCase;
 import net.soggymustache.butterflies.init.block.BlockButterflyCase;
+import net.soggymustache.butterflies.init.block.ButterflyBlocks;
 import net.soggymustache.butterflies.init.block.te.TileEntityButterflyCase;
 import net.soggymustache.butterflies.util.ButterflyType;
 import net.soggymustache.butterflies.util.IButterflyRenderer;
@@ -24,8 +25,8 @@ public class TileEntityButterflyCaseRenderer extends TileEntitySpecialRenderer<T
 	
 	@Override
     public void render(TileEntityButterflyCase te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
-		IBlockState ButterflyCase = te.getWorld().getBlockState(te.getPos());
-		if(ButterflyCase == null)
+		IBlockState bCase = te.getWorld().getBlockState(te.getPos());
+		if(bCase == null || (bCase != null && bCase.getBlock() != ButterflyBlocks.CASE))
 			return;
 
 		GL11.glPushMatrix();
@@ -34,7 +35,7 @@ public class TileEntityButterflyCaseRenderer extends TileEntitySpecialRenderer<T
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
 		
-		switch(ButterflyCase.getValue(BlockButterflyCase.FACING)) {
+		switch(bCase.getValue(BlockButterflyCase.FACING)) {
 			case SOUTH:
 			default:
 				GL11.glRotatef(180F, 1.0F, 0.0F, 0.0F);
@@ -60,7 +61,7 @@ public class TileEntityButterflyCaseRenderer extends TileEntitySpecialRenderer<T
 			this.bindTexture(RenderButterfly.TEXTURE);
 			GL11.glTranslatef((float) x + 0.5F, (float) y + 1.2F, (float) z + 0.5F);
 			GL11.glScalef(0.35F, 0.35F, 0.35F);
-			switch(ButterflyCase.getValue(BlockButterflyCase.FACING)) {
+			switch(bCase.getValue(BlockButterflyCase.FACING)) {
 				case SOUTH:
 				default:
 					GL11.glRotatef(180F, 1.0F, 0.0F, 0.0F);

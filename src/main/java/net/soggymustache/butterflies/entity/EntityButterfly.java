@@ -56,6 +56,9 @@ public class EntityButterfly extends EntityAnimal {
 		
 //		System.out.println(this.getExtra());
 		
+		Entity ent = this.world.getClosestPlayerToEntity(this, 5.0D);
+		this.getEntityData().setTag("Other", ent.writeToNBT(new NBTTagCompound()));
+		
 		return super.onInitialSpawn(difficulty, livingdata);
 	}
 
