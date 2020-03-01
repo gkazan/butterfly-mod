@@ -3,3 +3,4 @@ entity.butterflies.butterfly.name=Butterfly
 item.butterfly.name=Butterfly
 item.butterfly_net.name=Butterfly Net
 tile.butterfly_case.name=Display Case
+config.butterfly.name=Butterfly Config

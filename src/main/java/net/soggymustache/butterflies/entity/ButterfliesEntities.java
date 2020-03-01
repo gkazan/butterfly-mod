@@ -33,7 +33,7 @@ public class ButterfliesEntities {
 		final IForgeRegistry<EntityEntry> registry = event.getRegistry();
 
 		for(EntityContainer container : containers){
-			EntityEntry entry = EntityEntryBuilder.create().entity(container.entityClass).id(new ResourceLocation(ButterfliesReference.MOD_ID, container.entityName), id++).name(ButterfliesReference.MOD_ID + "." + container.entityName).tracker(90, 1, true).build();
+			EntityEntry entry = EntityEntryBuilder.create().entity(container.entityClass).id(new ResourceLocation(ButterfliesReference.MOD_ID, container.entityName), id++).name(ButterfliesReference.MOD_ID + "." + container.entityName).tracker(90, 2, true).build();
 			entry.setEgg(new EntityEggInfo(new ResourceLocation(ButterfliesReference.MOD_ID, container.entityName), 0xbdde1f, 0x1F85DE));
 			registry.register(entry);
 		}
